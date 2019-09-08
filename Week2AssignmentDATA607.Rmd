@@ -1,0 +1,204 @@
+---
+title: "Week2Assignment"
+author: "Banu Boopalan"
+date: "9/8/2019"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+  ioslides_presentation: default
+  pdf_document: default
+  slidy_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#Install RMySQL to load pacakge
+#install.packages("RMySQL")    <- Giving me an error when I install here so commented this out as I installed this already.
+library(RMySQL)
+library(DBI)
+library(dbplyr)
+library(plyr)
+library(dplyr)
+library(tidyverse)  ## loads many but not all "tidyverse" packages
+```
+
+## Section 1: Process Steps
+
+Choose six recent popular movies.  Ask at least five people that you know (friends, family, classmates, imaginary friends) to rate each of these movie that they have seen on a scale of 1 to 5.  Take the results (observations) and store them in a SQL database.  Load the information into an R dataframe.
+
+1. I setup 4 .csv files with data.
+2. I asked 5 people in my family and then used the FilmRatings.com website to identify some MPAA rating information and movie title names and distributor information and created my tables for the rating data. For some fictional people, I repeated rows in excel and used the Random function on the rating and had few more fictional names in my dataset get a rating value from 1 through 5
+3. I then imported into MYSQL through the Excel Data Export Tool and used the options to create the tables. I created 4 tables.
+4. Below listed tables and the column names
+5. Then I queried from the tables from R after opening the connection and then tried to do some plotting as best as I could
+wanted to write my dataframe back to mysql database but I was able to create a tablename but was not able to write back the dataframe observations into my table using dbWriteTable as there was an error. 
+
+##personrating
+SELECT `personrating`.`personrating_id`,
+    `personrating`.`Title`,
+    `personrating`.`RaterName`,
+    `personrating`.`Rating`
+FROM `dbmovierating`.`personrating`;
+
+##movieinfo
+SELECT `movieinfo`.`movieinfo_id`,
+    `movieinfo`.`Title`,
+    `movieinfo`.`MPAARating`,
+    `movieinfo`.`Rating`,
+    `movieinfo`.`RATINGLONGDESC`,
+    `movieinfo`.`REASON`,
+    `movieinfo`.`DISTRIBUTOR`
+FROM `dbmovierating`.`movieinfo`;
+
+##ratingdef
+SELECT `ratingdef`.`ratingdef_id`,
+    `ratingdef`.`Ratingdef`
+FROM `dbmovierating`.`ratingdef`;
+
+##personinfo
+SELECT `personinfo`.`personinfo_id`,
+    `personinfo`.`FirstName`,
+    `personinfo`.`Age`,
+    `personinfo`.`Sex`
+FROM `dbmovierating`.`personinfo`;
+
+
+
+
+```{r}
+con <- DBI::dbConnect(RMySQL::MySQL(), 
+                      host = "localhost",
+                      username = "cunyuser",
+                      dbname="dbmovierating",
+                      password = "bar"
+                      )
+dbListTables(con)
+dbDisconnect(con)
+```
+
+## Display my database tables and their columns
+
+
+```{r}
+con <- DBI::dbConnect(RMySQL::MySQL(), 
+                      host = "localhost",
+                      username = "cunyuser",
+                      dbname="dbmovierating",
+                      password = "bar"
+)
+movieinfo_df = dbSendQuery(con, "select * from movieinfo")
+dfmovieinfo = fetch(movieinfo_df, n=-1)
+head(dfmovieinfo)
+summary(dfmovieinfo)
+
+
+prsnrating_df = dbSendQuery(con, "select * from personrating")
+dfprsnrating = fetch(prsnrating_df, n=-1)
+head(dfprsnrating)
+summary(dfprsnrating)
+
+personinfo_df = dbSendQuery(con, "select * from personinfo")
+dfpersoninfo = fetch(personinfo_df, n=-1)
+head(dfpersoninfo)
+summary(dfpersoninfo)
+
+prsnrating_df = dbSendQuery(con, "select * from personrating")
+dfprsnrating = fetch(prsnrating_df, n=-1)
+head(dfprsnrating)
+summary(dfprsnrating)
+dbDisconnect(con)
+```
+
+## I am using merge to merge data into one table between 3 tables and merge has created some NA values
+
+
+```{r}
+names(dfpersoninfo)[2]<-"RaterName"
+names(dfpersoninfo)
+
+table1 <- merge(x = dfpersoninfo , y = dfprsnrating , by = "RaterName", all = TRUE)
+Table2 <- merge(x = table1 , y = dfmovieinfo[,c("Title","MPAARating","DISTRIBUTOR")], by = "Title", all = TRUE)
+##head(Table2)
+summary(Table2)
+
+library(knitr)
+kable(Table2[1:56, ])
+
+```
+
+## Plot Group Mean
+
+```{r fig.width=10,fig.height=11}
+library(plyr)
+mu <- ddply(Table2, "Age", summarise, grp.mean=mean(Rating))
+head(mu)
+plot(mu)
+
+
+```
+
+## Plot Geom Point
+```{r fig.width=10,fig.height=11}
+ggplot(data = Table2) + 
+  geom_point(mapping = aes(x = Title, y = RaterName)) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
+
+## Plot Histogram, Age, RaterName
+```{r, fig.width=10,fig.height=11}
+ggplot(data = Table2) + 
+  geom_bar(mapping = aes(x = Age, fill = RaterName))
+```
+
+
+## Plot Histogram, Title, by Sex, Age, RaterName
+```{r, fig.width=10,fig.height=11}
+ggplot(Table2, aes(x=Rating, fill = Title)) + geom_histogram() +
+  facet_wrap(Sex ~ Age ~ RaterName )
+```
+
+
+## Plot Histogram, mpaarating,by Sex, Age, RaterName - Few kids have watched R rated movie
+```{r, fig.width=10,fig.height=11}
+ggplot(data = Table2) + 
+  geom_bar(mapping = aes(x = Rating, fill = MPAARating), position = "fill") +  facet_wrap(Sex ~ Age ~ RaterName )
+
+```
+
+##Showing come code that I tried to create to write back to MYSQL from my dataframme but this is not working for me by using dbWriteTable from DBI library. But showing just my work to try to figure this out
+
+```{r}
+library(DBI)
+
+Table3 = Table2[,!(names(Table2) %in% c("personrating_id"))]
+con <- DBI::dbConnect(RMySQL::MySQL(), 
+                      host = "localhost",
+                      username = "cunyuser",
+                      dbname="dbmovierating",
+                      password = "bar"
+)
+dbListTables(con)
+dbSendQuery(con, "drop table if exists dbmovierating.table2")
+dbListTables(con)
+dbSendQuery(con,"CREATE TABLE `table2` (
+  `personrating_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `Title` varchar(255) DEFAULT NULL,
+  `RaterName` varchar(255) DEFAULT NULL,
+  `Age` bigint(20) DEFAULT NULL,
+  `Sex` varchar(255) DEFAULT NULL,
+  `Rating` bigint(20) DEFAULT NULL,
+  `MPAARating` varchar(255) DEFAULT NULL,
+  `DISTRIBUTOR`varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`personrating_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;")
+dbListTables(con)
+# dbWriteTable(con, "dbmovierating.table2", Table3[1:5,], row.name=FALSE, append=TRUE)
+# #dbWriteTable(con, "dbmovierating.table2", value=Table2(), append=TRUE, row.names=FALSE)
+# testdf = dbSendQuery(con, "select * from dbmovierating.table2")
+# testdf = fetch(testdf, n=-1)
+# head(testdf)
+dbDisconnect(con)
+```
+

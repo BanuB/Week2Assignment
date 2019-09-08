@@ -1,0 +1,99 @@
+personrating_id,Title,RaterName,Rating
+1,"Aquaman (2018)",Golan,4
+2,"Alita: Battle Angel (2019)",Golan,0
+3,"Wonder Woman (2017)",Golan,4
+4,"Avengers: Endgame (2019)",Golan,0
+5,"Avengers: Infinity War (2018)",Golan,3
+6,"Toy Story 4 (2019)",Golan,5
+7,"John Wick (2014)",Golan,4
+8,"Aquaman (2018)",Peter,5
+9,"Alita: Battle Angel (2019)",Peter,0
+10,"Wonder Woman (2017)",Peter,5
+11,"Avengers: Endgame (2019)",Peter,0
+12,"Avengers: Infinity War (2018)",Peter,4
+13,"Toy Story 4 (2019)",Peter,3
+14,"John Wick (2014)",Peter,0
+15,"Aquaman (2018)",Liam,4
+16,"Alita: Battle Angel (2019)",Liam,0
+17,"Wonder Woman (2017)",Liam,0
+18,"Avengers: Endgame (2019)",Liam,0
+19,"Avengers: Infinity War (2018)",Liam,0
+20,"Toy Story 4 (2019)",Liam,4
+21,"John Wick (2014)",Liam,0
+22,"Aquaman (2018)",Nathaniel,5
+23,"Alita: Battle Angel (2019)",Nathaniel,0
+24,"Wonder Woman (2017)",Nathaniel,5
+25,"Avengers: Endgame (2019)",Nathaniel,0
+26,"Avengers: Infinity War (2018)",Nathaniel,4
+27,"Toy Story 4 (2019)",Nathaniel,3
+28,"John Wick (2014)",Nathaniel,0
+29,"Aquaman (2018)",Gamora,5
+30,"Alita: Battle Angel (2019)",Gamora,5
+31,"Wonder Woman (2017)",Gamora,5
+32,"Avengers: Endgame (2019)",Gamora,4
+33,"Avengers: Infinity War (2018)",Gamora,4
+34,"Toy Story 4 (2019)",Gamora,4
+35,"John Wick (2014)",Gamora,5
+36,"Aquaman (2018)",Sumita,1
+37,"Alita: Battle Angel (2019)",Sumita,5
+38,"Wonder Woman (2017)",Sumita,5
+39,"Avengers: Endgame (2019)",Sumita,1
+40,"Avengers: Infinity War (2018)",Sumita,1
+41,"Toy Story 4 (2019)",Sumita,3
+42,"John Wick (2014)",Sumita,1
+43,"Aquaman (2018)",Jackson,5
+44,"Alita: Battle Angel (2019)",Jackson,3
+45,"Wonder Woman (2017)",Jackson,2
+46,"Avengers: Endgame (2019)",Jackson,5
+47,"Avengers: Infinity War (2018)",Jackson,5
+48,"Toy Story 4 (2019)",Jackson,5
+49,"John Wick (2014)",Jackson,0
+50,"Aquaman (2018)",John,5
+51,"Alita: Battle Angel (2019)",John,3
+52,"Wonder Woman (2017)",John,3
+53,"Avengers: Endgame (2019)",John,5
+54,"Avengers: Infinity War (2018)",John,5
+55,"Toy Story 4 (2019)",John,5
+56,"John Wick (2014)",John,5
+57,"Aquaman (2018)","Yong Lee",3
+58,"Alita: Battle Angel (2019)","Yong Lee",3
+59,"Wonder Woman (2017)","Yong Lee",3
+60,"Avengers: Endgame (2019)","Yong Lee",5
+61,"Avengers: Infinity War (2018)","Yong Lee",5
+62,"Toy Story 4 (2019)","Yong Lee",5
+63,"John Wick (2014)","Yong Lee",5
+64,"Aquaman (2018)",Togo,5
+65,"Alita: Battle Angel (2019)",Togo,4
+66,"Wonder Woman (2017)",Togo,5
+67,"Avengers: Endgame (2019)",Togo,5
+68,"Avengers: Infinity War (2018)",Togo,5
+69,"Toy Story 4 (2019)",Togo,3
+70,"John Wick (2014)",Togo,5
+71,"Aquaman (2018)",Olivia,5
+72,"Alita: Battle Angel (2019)",Olivia,5
+73,"Wonder Woman (2017)",Olivia,1
+74,"Avengers: Endgame (2019)",Olivia,3
+75,"Avengers: Infinity War (2018)",Olivia,4
+76,"Toy Story 4 (2019)",Olivia,2
+77,"John Wick (2014)",Olivia,2
+78,"Aquaman (2018)",Marina,2
+79,"Alita: Battle Angel (2019)",Marina,1
+80,"Wonder Woman (2017)",Marina,1
+81,"Avengers: Endgame (2019)",Marina,3
+82,"Avengers: Infinity War (2018)",Marina,4
+83,"Toy Story 4 (2019)",Marina,1
+84,"John Wick (2014)",Marina,4
+85,"Aquaman (2018)",Max,3
+86,"Alita: Battle Angel (2019)",Max,5
+87,"Wonder Woman (2017)",Max,3
+88,"Avengers: Endgame (2019)",Max,2
+89,"Avengers: Infinity War (2018)",Max,3
+90,"Toy Story 4 (2019)",Max,1
+91,"John Wick (2014)",Max,1
+92,"Aquaman (2018)",Simba,1
+93,"Alita: Battle Angel (2019)",Simba,4
+94,"Wonder Woman (2017)",Simba,4
+95,"Avengers: Endgame (2019)",Simba,2
+96,"Avengers: Infinity War (2018)",Simba,5
+97,"Toy Story 4 (2019)",Simba,4
+98,"John Wick (2014)",Simba,4
